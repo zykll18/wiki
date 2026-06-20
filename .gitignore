@@ -24,11 +24,18 @@ out/
 .DS_Store
 .idea/
 .vscode/
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+/.obsidian/
 
 # Private-vault material must never enter this repository
-raw/projects/
-raw/conversations/private/
-private/
-secrets/
+/raw/**
+!/raw/
+!/raw/public-sources/
+!/raw/public-sources/*.md
+!/raw/fictional-private-data/
+!/raw/fictional-private-data/*.md
+!/raw/inbox/
+!/raw/inbox/pending.md
+/raw/projects/
+/raw/conversations/private/
+/private/
+/secrets/
