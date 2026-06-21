@@ -80,6 +80,21 @@ class PrivacyScanTests(unittest.TestCase):
 
             self.assertEqual(findings, [])
 
+    def test_scans_nested_env_example_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            nested = root / "nested"
+            nested.mkdir()
+            secret = "s" + "k-" + "abcdefgh12345678"
+            (nested / ".env.example").write_text(
+                f"TOKEN={secret}\n",
+                encoding="utf-8",
+            )
+
+            findings = scan_repository(root)
+
+            self.assertEqual([finding.kind for finding in findings], ["secret"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -47,7 +47,8 @@ def iter_text_files(root: Path) -> list[Path]:
         path
         for path in root.rglob("*")
         if path.is_file()
-        and path.suffix.lower() in TEXT_SUFFIXES
+        and not path.is_symlink()
+        and (path.suffix.lower() in TEXT_SUFFIXES or path.name == ".env.example")
         and not any(part in IGNORED_PARTS for part in path.relative_to(root).parts)
         and not any(
             path.relative_to(root).is_relative_to(prefix)
@@ -71,7 +72,7 @@ def scan_repository(root: Path | str) -> list[Finding]:
         )
 
     for path in iter_text_files(root_path):
-        if path.name == ".env.example":
+        if path == root_path / ".env.example":
             continue
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
         for number, line in enumerate(lines, start=1):
