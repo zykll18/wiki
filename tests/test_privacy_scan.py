@@ -95,6 +95,19 @@ class PrivacyScanTests(unittest.TestCase):
 
             self.assertEqual([finding.kind for finding in findings], ["secret"])
 
+    def test_scans_svg_text_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            email = "hidden.person" + "@example.com"
+            (root / "preview.svg").write_text(
+                f'<svg><text>{email}</text></svg>',
+                encoding="utf-8",
+            )
+
+            findings = scan_repository(root)
+
+            self.assertEqual([finding.kind for finding in findings], ["email"])
+
 
 if __name__ == "__main__":
     unittest.main()
