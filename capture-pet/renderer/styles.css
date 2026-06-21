@@ -1,0 +1,180 @@
+:root {
+  --ink: #050505;
+  --dot: #f6df88;
+  --ok: #6fa76a;
+  --bad: #b64b35;
+  --shadow: 0 14px 28px rgba(30, 34, 26, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.pet {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  -webkit-app-region: no-drag;
+}
+
+.handle {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 34% 34%, rgba(255, 255, 255, 0.55) 0 15%, transparent 16%),
+    rgba(34, 37, 29, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  -webkit-app-region: drag;
+}
+
+.pacman {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  filter: drop-shadow(0 13px 18px rgba(30, 34, 26, 0.28));
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), filter 180ms ease;
+}
+
+.pacman svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pacman-body {
+  fill: url("#pacmanFill");
+  stroke: var(--ink);
+  stroke-width: 8;
+  stroke-linejoin: miter;
+  animation: chomp 720ms infinite alternate cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.pacman-eye {
+  fill: var(--ink);
+}
+
+.crumbs {
+  position: absolute;
+  right: -3px;
+  top: 58px;
+  display: flex;
+  gap: 7px;
+  transform: translateX(8px);
+}
+
+.crumbs i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 1px 4px rgba(34, 28, 12, 0.18);
+  animation: drift 1.05s infinite ease-in-out;
+}
+
+.crumbs i:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.crumbs i:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+.pet.hungry .pacman,
+.pet.eating .pacman {
+  transform: scale(1.08) translateX(-4px);
+  filter: saturate(1.08);
+}
+
+.pet.hungry .pacman-body,
+.pet.eating .pacman-body {
+  animation-duration: 240ms;
+}
+
+.pet.hungry .crumbs i,
+.pet.eating .crumbs i {
+  animation-duration: 520ms;
+}
+
+.pet.ok .pacman {
+  filter: drop-shadow(0 13px 18px rgba(30, 34, 26, 0.28)) drop-shadow(0 0 0 var(--ok));
+}
+
+.pet.error .pacman {
+  filter: drop-shadow(0 13px 18px rgba(30, 34, 26, 0.28)) saturate(0.8);
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  min-width: 58px;
+  padding: 5px 8px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: rgba(255, 253, 216, 0.96);
+  color: var(--ink);
+  font: 800 10px/1 "Avenir Next", "PingFang SC", sans-serif;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px) scale(0.92);
+  transition: opacity 160ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.toast.error {
+  background: #f3c0ac;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+@keyframes chomp {
+  from {
+    d: path("M60 8 A52 52 0 1 0 60 112 A52 52 0 0 0 105 86 L61 60 L105 34 A52 52 0 0 0 60 8 Z");
+  }
+  to {
+    d: path("M60 8 A52 52 0 1 0 60 112 A52 52 0 0 0 112 60 L61 60 L112 60 A52 52 0 0 0 60 8 Z");
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translateX(0) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-8px) scale(1);
+  }
+}

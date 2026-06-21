@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Wiki Capture Pet</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="pet" id="pet" title="点击吃剪贴板，拖放资料自动保存">
+      <div class="handle" title="拖这里移动"></div>
+      <div class="crumbs" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+      <button class="pacman" id="pacman" type="button" aria-label="capture inbox">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <radialGradient id="pacmanFill" cx="34%" cy="32%" r="72%">
+              <stop offset="0%" stop-color="#fffbd1" />
+              <stop offset="38%" stop-color="#ffff37" />
+              <stop offset="100%" stop-color="#f7d800" />
+            </radialGradient>
+          </defs>
+          <path
+            class="pacman-body"
+            d="M60 8 A52 52 0 1 0 60 112 A52 52 0 0 0 105 86 L61 60 L105 34 A52 52 0 0 0 60 8 Z"
+          />
+          <circle class="pacman-eye" cx="60" cy="32" r="9" />
+        </svg>
+      </button>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <p class="sr-only" id="statusText"></p>
+    </main>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>

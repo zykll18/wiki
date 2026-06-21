@@ -1,0 +1,15 @@
+{
+  "name": "llm-wiki-capture-pet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop capture inbox for an LLM-maintained knowledge base.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check main.js && node --check preload.js && node --check lib/capture-store.js",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "electron": "^42.4.0"
+  }
+}
