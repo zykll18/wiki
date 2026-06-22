@@ -1,21 +1,32 @@
 # Capture Pet
 
-Capture Pet is a small Electron desktop inbox for the public knowledge-base
-demo. It saves clipboard or dropped text into `raw/inbox/captures/` and adds the
-new source to `raw/inbox/pending.md`.
+Capture Pet is the local capture layer for the AI-conversation-to-Obsidian
+workflow.
+
+Copy a useful technical conversation, click the pet, and the complete text is
+saved to:
+
+```text
+raw/inbox/captures/
+raw/inbox/pending.md
+```
+
+Capture Pet does not call Codex or summarize the conversation. After capture,
+ask Codex to process the pending inbox according to the repository's
+`AGENTS.md`.
 
 ## Install and Run
 
 ```bash
 npm install
-npm start
+LLM_WIKI_VAULT="/absolute/path/to/your/Obsidian/vault" npm start
 ```
 
-The parent repository is the default vault. To use another vault:
+The environment variable is required when the target Obsidian vault is outside
+the parent repository.
 
-```bash
-LLM_WIKI_VAULT="/path/to/vault" npm start
-```
+Capture Pet currently runs as an Electron development application. It is not
+yet a signed or notarized macOS release.
 
 ## Controls
 
@@ -25,31 +36,47 @@ LLM_WIKI_VAULT="/path/to/vault" npm start
 - `Cmd/Ctrl + V`: capture clipboard text.
 - Right-click: quit.
 
+## After Capture
+
+Tell Codex:
+
+```text
+Process raw/inbox/pending.md according to AGENTS.md.
+Preserve the raw conversation, create a summary, update existing topics before
+creating new ones, and record the result in log.md.
+```
+
 ## Privacy
 
-Capture Pet writes locally. It does not upload data. Use only demo data when
-creating public screenshots, and run the repository privacy scanner before
-committing.
+- All captured content is written locally.
+- Capture Pet does not upload data.
+- The complete source is preserved for traceability.
+- Use fictional content for public screenshots and demos.
 
 ---
 
 # Capture Pet 中文说明
 
-Capture Pet 是公开知识库演示中的 Electron 桌面收集入口。它把剪贴板或拖入
-的文本保存到 `raw/inbox/captures/`，并追加到 `raw/inbox/pending.md`。
+Capture Pet 是“AI 对话沉淀到 Obsidian”工作流中的本地捕获入口。
+
+复制一段有价值的技术对话并点击 Pet，完整原文会保存到：
+
+```text
+raw/inbox/captures/
+raw/inbox/pending.md
+```
+
+Capture Pet 不会调用 Codex，也不会自行总结。捕获完成后，需要让 Codex 按照
+仓库中的 `AGENTS.md` 处理 pending inbox。
 
 ## 安装与运行
 
 ```bash
 npm install
-npm start
+LLM_WIKI_VAULT="/你的/Obsidian/Vault/绝对路径" npm start
 ```
 
-默认使用上级仓库作为 vault。指定其他目录：
-
-```bash
-LLM_WIKI_VAULT="/path/to/vault" npm start
-```
+当前 Capture Pet 是 Electron 开发版，还不是已签名、公证的 macOS 安装包。
 
 ## 操作
 
@@ -59,7 +86,18 @@ LLM_WIKI_VAULT="/path/to/vault" npm start
 - `Cmd/Ctrl + V`：捕获剪贴板文本。
 - 右键：退出。
 
+## 捕获之后
+
+告诉 Codex：
+
+```text
+按照 AGENTS.md 处理 raw/inbox/pending.md。
+保留原始对话，生成 summary，优先更新已有 topic，并在 log.md 记录处理结果。
+```
+
 ## 隐私
 
-Capture Pet 只写入本地，不上传数据。制作公开截图时只能使用演示数据，提交
-前必须运行仓库隐私扫描器。
+- 所有内容只写入本地。
+- Capture Pet 不上传数据。
+- 完整原文会保留，以便追溯。
+- 公开截图和演示只能使用虚构内容。
